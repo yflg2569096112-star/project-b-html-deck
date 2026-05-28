@@ -1,0 +1,1257 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project B | HTML 路演 Deck</title>
+  <style>
+    :root {
+      --navy: #0d2b63;
+      --ink: #101828;
+      --blue: #2f6fde;
+      --green: #2fb073;
+      --orange: #f59a23;
+      --red: #d92d20;
+      --cyan: #2b9ec5;
+      --paper: #ffffff;
+      --soft: #f5f8fc;
+      --line: #d9e2ef;
+      --muted: #667085;
+      --shadow: 0 18px 46px rgba(16, 24, 40, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: #071832;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, video { display: block; max-width: 100%; }
+    button, a.button {
+      appearance: none;
+      border: 0;
+      border-radius: 7px;
+      min-height: 44px;
+      padding: 10px 18px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: var(--paper);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 54px 64px 42px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+    .slide.active {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+    .slide.dark {
+      background:
+        linear-gradient(115deg, rgba(13, 43, 99, 0.98) 0%, rgba(13, 43, 99, 0.94) 46%, rgba(32, 137, 174, 0.9) 100%),
+        #0d2b63;
+      color: #fff;
+    }
+    .slide.soft { background: #f7faff; }
+
+    .topline,
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 28px;
+      color: rgba(16, 24, 40, 0.62);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .dark .topline,
+    .dark .footer { color: rgba(255, 255, 255, 0.75); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: inherit;
+      font-weight: 900;
+    }
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: var(--navy);
+      color: white;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .dark .brand-mark { background: white; color: var(--navy); }
+    .progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 5px;
+      width: 12.5%;
+      background: linear-gradient(90deg, var(--cyan), var(--orange));
+      transition: width 180ms ease;
+      z-index: 8;
+    }
+    .pager {
+      position: absolute;
+      right: 24px;
+      bottom: 16px;
+      z-index: 9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(16, 24, 40, 0.64);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .pager button {
+      width: 34px;
+      min-height: 34px;
+      padding: 0;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--navy);
+      box-shadow: 0 8px 18px rgba(16, 24, 40, 0.08);
+    }
+    .jump-nav {
+      position: absolute;
+      left: 50%;
+      bottom: 14px;
+      z-index: 9;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px;
+      border: 1px solid rgba(217, 226, 239, 0.9);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, 0.1);
+      transform: translateX(-50%);
+      backdrop-filter: blur(10px);
+    }
+    .jump-nav button {
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: transparent;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .jump-nav button.active {
+      background: var(--navy);
+      color: white;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      max-width: 950px;
+      font-size: clamp(46px, 6vw, 78px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      font-weight: 950;
+    }
+    h2 {
+      max-width: 1040px;
+      font-size: clamp(34px, 4.8vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      font-weight: 950;
+    }
+    h3 {
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 30px;
+      padding: 5px 12px;
+      border: 1px solid #b9cff5;
+      border-radius: 7px;
+      color: var(--blue);
+      background: #edf5ff;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .dark .kicker {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.36);
+      color: #fff;
+    }
+    .lead {
+      margin-top: 22px;
+      max-width: 940px;
+      color: #344054;
+      font-size: clamp(22px, 2.15vw, 32px);
+      line-height: 1.42;
+      font-weight: 760;
+    }
+    .dark .lead { color: rgba(255, 255, 255, 0.92); }
+    .muted {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.6;
+      font-weight: 680;
+    }
+    .dark .muted { color: rgba(255, 255, 255, 0.75); }
+
+    .content {
+      min-height: 0;
+      display: grid;
+      align-items: center;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 520px);
+      align-items: center;
+      gap: 44px;
+    }
+    .cover-media,
+    .media-frame,
+    .screen-frame {
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      border-radius: 10px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .cover-media video,
+    .media-frame video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #071832;
+    }
+    .cover-caption,
+    .frame-caption {
+      padding: 16px 18px;
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.14);
+      color: inherit;
+      font-size: 15px;
+      font-weight: 850;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 36px;
+    }
+    .metric {
+      min-height: 116px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .metric strong {
+      display: block;
+      color: var(--blue);
+      font-size: 36px;
+      line-height: 1.1;
+      font-weight: 950;
+    }
+    .metric span {
+      display: block;
+      margin-top: 9px;
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 850;
+    }
+    .impact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(360px, 0.88fr);
+      gap: 22px;
+      margin-top: 34px;
+      align-items: stretch;
+    }
+    .hero-stat {
+      position: relative;
+      min-height: 282px;
+      padding: 24px 28px;
+      border: 1px solid #c7d7ef;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(13, 43, 99, 0.97), rgba(38, 111, 190, 0.94)),
+        var(--navy);
+      color: white;
+      box-shadow: 0 20px 48px rgba(13, 43, 99, 0.22);
+      overflow: hidden;
+    }
+    .hero-stat::after {
+      content: "EFFICIENCY";
+      position: absolute;
+      right: 20px;
+      bottom: 14px;
+      color: rgba(255, 255, 255, 0.08);
+      font-size: 72px;
+      font-weight: 950;
+      letter-spacing: 0;
+      pointer-events: none;
+    }
+    .stat-kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .efficiency-number {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-top: 28px;
+      font-weight: 950;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+    .efficiency-number .num {
+      font-size: clamp(70px, 9vw, 124px);
+      line-height: 0.86;
+    }
+    .efficiency-number .unit {
+      margin-left: -10px;
+      font-size: 24px;
+      opacity: 0.86;
+    }
+    .efficiency-number .arrow {
+      color: #f9b24b;
+      font-size: 62px;
+      line-height: 1;
+    }
+    .hero-stat p {
+      position: relative;
+      z-index: 1;
+      max-width: 660px;
+      margin-top: 24px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 19px;
+      line-height: 1.5;
+      font-weight: 780;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .stat-card {
+      min-height: 134px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .stat-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+    .stat-card strong small {
+      color: var(--blue);
+      font-size: 21px;
+      font-weight: 950;
+    }
+    .stat-card span {
+      display: block;
+      margin-top: 12px;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 850;
+    }
+    .stat-card.accent {
+      border-color: #f5cf96;
+      background: #fff8ec;
+    }
+    .stat-card.accent strong { color: #b85b00; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+      margin-top: 30px;
+    }
+    .flow-step {
+      position: relative;
+      display: grid;
+      grid-template-rows: 42px 1fr auto;
+      gap: 12px;
+      min-height: 430px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.07);
+    }
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      right: -13px;
+      top: 50%;
+      width: 12px;
+      height: 2px;
+      background: #a9b9cc;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #eef5ff;
+      color: var(--blue);
+      font-size: 16px;
+      font-weight: 950;
+    }
+    .flow-step:nth-child(3) .flow-num { background: #ebf8f1; color: var(--green); }
+    .flow-step:nth-child(5) .flow-num { background: #fff3df; color: var(--orange); }
+    .thumb {
+      width: 100%;
+      height: 168px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--soft);
+      cursor: zoom-in;
+    }
+    .flow-step h3 { font-size: 21px; }
+    .flow-step p {
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.48;
+      font-weight: 720;
+    }
+
+    .video-slide {
+      padding: 28px;
+      background: #050b18;
+      color: white;
+    }
+    .video-slide.active {
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+    .video-shell {
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+    }
+    .video-shell video {
+      width: min(100%, 1500px);
+      max-height: calc(100vh - 130px);
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 8px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.44);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      gap: 34px;
+      align-items: center;
+      min-height: 0;
+    }
+    .screen-frame img {
+      width: 100%;
+      max-height: 62vh;
+      object-fit: contain;
+      background: #f6f8fb;
+      cursor: zoom-in;
+    }
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    a.button.primary { background: var(--navy); color: white; }
+    a.button.secondary {
+      background: white;
+      color: var(--navy);
+      border: 1px solid #bed0ea;
+    }
+    .callout {
+      margin-top: 24px;
+      padding: 16px 18px;
+      border-left: 5px solid var(--orange);
+      border-radius: 8px;
+      background: #fff7ec;
+      color: #7a3d00;
+      font-size: 18px;
+      line-height: 1.48;
+      font-weight: 900;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+    .time-step {
+      min-height: 260px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .time-step b {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #eef5ff;
+      color: var(--blue);
+      font-size: 14px;
+    }
+    .time-step h3 {
+      margin-top: 14px;
+      font-size: 20px;
+    }
+    .time-step p {
+      margin-top: 10px;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.48;
+      font-weight: 700;
+    }
+    .build-note {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .quote {
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 18px;
+      line-height: 1.55;
+      font-weight: 850;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .quote strong { color: var(--blue); }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: 1.28fr 0.72fr;
+      gap: 28px;
+      align-items: stretch;
+      min-height: 0;
+    }
+    .evidence-main img {
+      width: 100%;
+      height: 62vh;
+      object-fit: cover;
+      object-position: left center;
+      background: #f6f8fb;
+      cursor: zoom-in;
+    }
+    .evidence-side {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+    .bullet {
+      padding: 17px 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .bullet h3 { font-size: 22px; color: var(--navy); }
+    .bullet p {
+      margin-top: 8px;
+      color: #344054;
+      font-size: 16px;
+      line-height: 1.48;
+      font-weight: 730;
+    }
+    .evidence-metrics {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .evidence-metric {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .evidence-metric strong {
+      color: var(--blue);
+      font-size: 36px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+    .evidence-metric span {
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.42;
+      font-weight: 800;
+    }
+    .iteration-grid {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 26px;
+      align-items: stretch;
+      margin-top: 26px;
+    }
+    .iteration-number {
+      min-height: 470px;
+      padding: 28px;
+      border: 1px solid #c7d7ef;
+      border-radius: 12px;
+      background:
+        linear-gradient(140deg, rgba(13, 43, 99, 0.97), rgba(43, 158, 197, 0.9)),
+        var(--navy);
+      color: white;
+      box-shadow: 0 20px 48px rgba(13, 43, 99, 0.22);
+    }
+    .iteration-number .big {
+      display: block;
+      margin-top: 26px;
+      font-size: clamp(86px, 12vw, 150px);
+      line-height: 0.88;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+    .iteration-number .sub {
+      display: block;
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 24px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+    .iteration-number p {
+      margin-top: 26px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 18px;
+      line-height: 1.58;
+      font-weight: 750;
+    }
+    .process-stack {
+      display: grid;
+      gap: 14px;
+      align-content: stretch;
+    }
+    .process-card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+      align-items: center;
+      min-height: 102px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .process-card strong {
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #eef5ff;
+      color: var(--blue);
+      font-size: 19px;
+      font-weight: 950;
+      text-align: center;
+    }
+    .process-card h3 {
+      font-size: 22px;
+      color: var(--navy);
+    }
+    .process-card p {
+      margin-top: 5px;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 750;
+    }
+    .process-card.accent strong {
+      background: #fff3df;
+      color: #b85b00;
+    }
+    .process-card.green strong {
+      background: #eaf8f0;
+      color: var(--green);
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+      min-height: 0;
+    }
+    .feedback {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 10px;
+      min-height: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.07);
+    }
+    .feedback h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 23px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .feedback img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f6f8fb;
+      cursor: zoom-in;
+    }
+    .feedback p {
+      min-height: 78px;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+    .feedback.teacher-feedback {
+      grid-column: 1 / -1;
+      grid-template-columns: 220px minmax(0, 1fr) 330px;
+      grid-template-rows: auto;
+      align-items: center;
+    }
+    .feedback.teacher-feedback h3 { align-self: start; }
+    .feedback.teacher-feedback img { height: 165px; }
+    .feedback.teacher-feedback p { min-height: 0; }
+    .boundary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .boundary div {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #fff7ec;
+      color: #7a3d00;
+      font-size: 14px;
+      line-height: 1.42;
+      font-weight: 850;
+    }
+
+    .closing-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+      gap: 34px;
+      align-items: center;
+    }
+    .slide[data-title="反馈和边界"] h2 {
+      font-size: clamp(32px, 3.8vw, 48px);
+    }
+    .slide[data-title="反馈和边界"] {
+      padding-top: 44px;
+      padding-bottom: 50px;
+      gap: 16px;
+    }
+
+    .zoom-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 28px;
+      background: rgba(5, 11, 24, 0.9);
+    }
+    .zoom-overlay.open { display: grid; }
+    .zoom-overlay img {
+      max-width: 96vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 28px 80px rgba(0,0,0,0.5);
+      background: white;
+    }
+
+    @media (max-width: 1100px) {
+      .slide { padding: 42px 34px 34px; }
+      .cover-grid,
+      .split,
+      .evidence,
+      .closing-grid { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-step { min-height: 280px; }
+      .flow-step::after { display: none; }
+      .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .impact-layout { grid-template-columns: 1fr; }
+      .iteration-grid { grid-template-columns: 1fr; }
+      .jump-nav {
+        max-width: calc(100vw - 160px);
+        overflow-x: auto;
+      }
+      .feedback-grid { grid-template-columns: 1fr; }
+      .feedback.teacher-feedback {
+        grid-column: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+      }
+      .feedback img { height: 24vh; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide dark active" data-title="封面">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>Project B | 飞书妙搭课后服务 MVP</span></div>
+        <span>2026 微创新大赛 AI 数字化赛道</span>
+      </div>
+      <div class="content cover-grid">
+        <div>
+          <span class="kicker">第 1 页 / 封面</span>
+          <h1>用飞书妙搭，把雅思课堂内容变成课后服务流程。</h1>
+          <p class="lead">老师上传课堂笔记，AI 生成复习卡和助教检查项；老师确认后进入飞书多维表，最后形成学生可复习、助教可跟进、后台可留痕的数据资产。</p>
+          <div class="chips">
+            <span class="chip">50min → 5min</span>
+            <span class="chip">90 秒稳定视频</span>
+            <span class="chip">真实妙搭页面</span>
+            <span class="chip">飞书多维表留痕</span>
+            <span class="chip">三类真实反馈</span>
+          </div>
+        </div>
+        <div class="cover-media">
+          <video src="assets/projectb-demo-90s.mp4" controls preload="metadata" poster="assets/student-review-cards.jpg"></video>
+          <div class="cover-caption">现场策略：先用录屏稳定展示完整流程，再打开真实页面补证。</div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>主展示：HTML Slide Deck</span></div>
+    </section>
+
+    <section class="slide soft" data-title="一句话定位">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>一句话定位</span></div>
+        <span>不是 PPT 动画，是可打开的服务 MVP</span>
+      </div>
+      <div class="content">
+        <div>
+          <span class="kicker">第 2 页 / 一句话定位</span>
+          <h2>Project B 是一个用飞书妙搭搭建的雅思课后服务 MVP。</h2>
+          <p class="lead">它解决的不是“AI 会不会写一段反馈”，而是老师讲过的内容，能不能稳定进入学生复习、助教跟进和飞书数据沉淀。</p>
+          <div class="impact-layout">
+            <div class="hero-stat">
+              <span class="stat-kicker">单课服务包整理时间</span>
+              <div class="efficiency-number" aria-label="从 50 分钟到 5 分钟">
+                <span class="num">50</span><span class="unit">min</span>
+                <span class="arrow">→</span>
+                <span class="num">5</span><span class="unit">min</span>
+              </div>
+              <p>小样本观察口径：原来手动整理单课服务包约 50 分钟；现在由系统生成初稿，老师主要做 5 维质检和确认。</p>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-card accent"><strong>10<small>x</small></strong><span>理论整理效率提升，用于说明方向，不夸大成最终产能。</span></div>
+              <div class="stat-card"><strong>12</strong><span>Project B 课堂样本，后续继续补更多班级。</span></div>
+              <div class="stat-card"><strong>90<small>s</small></strong><span>录屏覆盖完整操作链路，现场展示稳定。</span></div>
+              <div class="stat-card"><strong>3</strong><span>学生页、助教页、飞书多维表三种服务视图。</span></div>
+            </div>
+          </div>
+          <div class="callout">讲法重点：PPT 是证据材料，主叙事是“真实流程 + 飞书妙搭实现 + 反馈推动迭代”。</div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>开场 15 秒</span></div>
+    </section>
+
+    <section class="slide" data-title="真实服务流程图">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>真实服务流程图</span></div>
+        <span>同一份课堂数据，拆成三种服务视图</span>
+      </div>
+      <div class="content">
+        <div>
+          <span class="kicker">第 3 页 / 真实服务流程图</span>
+          <h2>从课堂笔记到学生页、助教页、飞书表格。</h2>
+          <div class="flow">
+            <div class="flow-step">
+              <span class="flow-num">1</span>
+              <h3>课堂笔记输入</h3>
+              <img class="thumb zoomable" src="assets/confirm-writein.jpg" alt="老师确认写入截图" />
+              <p>老师把课堂笔记或课后总结放进页面，不再从零写长反馈。</p>
+            </div>
+            <div class="flow-step">
+              <span class="flow-num">2</span>
+              <h3>AI 结构化生成</h3>
+              <img class="thumb zoomable" src="assets/quality-modal.jpg" alt="生成后质检截图" />
+              <p>把词汇、方法、易错点、任务拆成学生复习卡和助教检查项。</p>
+            </div>
+            <div class="flow-step">
+              <span class="flow-num">3</span>
+              <h3>老师确认入库</h3>
+              <img class="thumb zoomable" src="assets/bitable-table.jpg" alt="飞书多维表截图" />
+              <p>AI 内容进入学生页前，先经过老师确认和质量守门。</p>
+            </div>
+            <div class="flow-step">
+              <span class="flow-num">4</span>
+              <h3>学生个人复习页</h3>
+              <img class="thumb zoomable" src="assets/student-review-cards.jpg" alt="学生复习页截图" />
+              <p>学生看到整理后的个人复习卡，而不是原始课堂记录。</p>
+            </div>
+            <div class="flow-step">
+              <span class="flow-num">5</span>
+              <h3>助教检查页</h3>
+              <img class="thumb zoomable" src="assets/ta-check-view.jpg" alt="助教检查页截图" />
+              <p>助教只抓关键动作：作业是否完成、核心单词是否掌握。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>流程先讲结果，再进视频</span></div>
+    </section>
+
+    <section class="slide video-slide" data-title="90 秒视频">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>90 秒视频</span></div>
+        <span>全屏播放：完整操作链路</span>
+      </div>
+      <div class="video-shell">
+        <video id="mainVideo" src="assets/projectb-demo-90s.mp4" controls preload="metadata" poster="assets/student-review-cards.jpg"></video>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>不现场重新生成，保证稳定</span></div>
+    </section>
+
+    <section class="slide soft" data-title="真实页面入口">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>真实页面入口</span></div>
+        <span>评委追问真实性时，直接打开</span>
+      </div>
+      <div class="content split">
+        <div>
+          <span class="kicker">第 5 页 / 真实页面入口</span>
+          <h2>录屏负责稳定演示，真实页面负责补证。</h2>
+          <p class="lead">这个页面已经可以打开。现场不重新跑 AI，是为了避免网络和生成等待影响节奏；但学生复习页本身不是 PPT 动画。</p>
+          <div class="button-row">
+            <a class="button primary" href="https://mcn6lcas1bhc.aiforce.cloud/app/app_4k1czx4p1rthf/student-review-v2?student_id=test_reading_20260430" target="_blank" rel="noreferrer">打开真实妙搭页面</a>
+            <a class="button secondary" href="ProjectB_2026微创新大赛路演PPT_Codex_V9.pptx">打开 V9 PPT 备份</a>
+          </div>
+          <div class="callout">权限口径：当前 MVP 用学生专属链接做轻量隔离；后续按学生、家长、老师、管理员设计角色权限。</div>
+        </div>
+        <div class="screen-frame">
+          <img class="zoomable" src="assets/student-review-cards.jpg" alt="真实学生复习页截图" />
+          <div class="frame-caption">学生看到的是从课堂内容整理出的个人复习卡。</div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>30 秒真实页面补证</span></div>
+    </section>
+
+    <section class="slide" data-title="飞书妙搭实现时间线">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>飞书妙搭实现时间线</span></div>
+        <span>“我是怎么做出来的”控制在 1 分钟内</span>
+      </div>
+      <div class="content">
+        <div>
+          <span class="kicker">第 6 页 / 飞书妙搭实现时间线</span>
+          <h2>从一个课后服务断点，迭代成可演示的妙搭 MVP。</h2>
+          <div class="timeline">
+            <div class="time-step"><b>1</b><h3>找断点</h3><p>课堂内容很多，但学生下课后不知道复习什么，助教也缺少检查抓手。</p></div>
+            <div class="time-step"><b>2</b><h3>妙搭原型</h3><p>用飞书妙搭搭老师输入页和确认流程，先把服务动作跑起来。</p></div>
+            <div class="time-step"><b>3</b><h3>AI 生成</h3><p>把课堂笔记拆成复习卡、例句、方法点和助教检查项。</p></div>
+            <div class="time-step"><b>4</b><h3>多维表沉淀</h3><p>确认后写入飞书多维表，用学生 ID、日期、类型和状态承接。</p></div>
+            <div class="time-step"><b>5</b><h3>三种视图</h3><p>同一份数据拆成学生复习页、助教检查页和后台记录。</p></div>
+            <div class="time-step"><b>6</b><h3>反馈迭代</h3><p>结合老师、助教、顾问反馈，加质检、收敛字段和页面表达。</p></div>
+          </div>
+          <div class="build-note">
+            <div class="quote"><strong>口播压缩版：</strong>我用 Codex 和 Claude Code 做方案推进和风险 review，再用飞书妙搭承接页面、流程和数据。Project B 迭代了 70 多个版本，中间靠飞书培训和运维群反馈不断修 bug、收敛字段和页面。</div>
+            <div class="quote"><strong>讲法边界：</strong>强调这是展示性 MVP，不夸大成大规模推广；重点讲“我怎样用飞书妙搭把课后服务流程跑通”。</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>60 秒以内</span></div>
+    </section>
+
+    <section class="slide soft" data-title="迭代过程">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>迭代过程</span></div>
+        <span>不是一次生成出来的，而是持续修出来的</span>
+      </div>
+      <div class="content">
+        <div>
+          <span class="kicker">第 7 页 / 迭代过程</span>
+          <h2>70+ 次 Project B 迭代，把想法修成能现场演示的服务流程。</h2>
+          <div class="iteration-grid">
+            <div class="iteration-number">
+              <span class="stat-kicker">Project B version history</span>
+              <span class="big">70+</span>
+              <span class="sub">从 idea、plan、互相 review，到 bug 修复和页面收敛。</span>
+              <p>我先让妙搭出一版 plan，再把 idea 交给 Codex 和 Claude Code 互相 review，找风险点、拆任务、推进实现。这个过程不是一次生成，而是反复验证、修 bug、收敛字段和流程。</p>
+            </div>
+            <div class="process-stack">
+              <div class="process-card">
+                <strong>Plan</strong>
+                <div><h3>妙搭先出方案</h3><p>先用妙搭把 idea 变成可执行计划，明确老师输入、学生页、助教页和飞书表格之间的关系。</p></div>
+              </div>
+              <div class="process-card accent">
+                <strong>Review</strong>
+                <div><h3>Codex × Claude Code 互相 review</h3><p>让两个工具交叉检查风险点：字段是否够、流程是否断、演示是否稳定、权限怎么讲。</p></div>
+              </div>
+              <div class="process-card green">
+                <strong>70+</strong>
+                <div><h3>Project B 反复修 bug</h3><p>报名后开始密集迭代，Project B 修改 70 多个版本；另一个小项目也迭代约 40-50 次。</p></div>
+              </div>
+              <div class="process-card">
+                <strong>Feishu</strong>
+                <div><h3>飞书培训和运维群支持</h3><p>培训内容和运维群老师的快速答疑，帮助我一步步解决页面、调试和流程问题。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>过程页：讲真实做法，不讲成神奇生成</span></div>
+    </section>
+
+    <section class="slide soft" data-title="飞书多维表证据">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>飞书多维表证据</span></div>
+        <span>真实字段和截图为主</span>
+      </div>
+      <div class="content evidence">
+        <div class="screen-frame evidence-main">
+          <img class="zoomable" src="assets/bitable-table.jpg" alt="飞书多维表真实截图" />
+        </div>
+        <div class="evidence-side">
+          <span class="kicker">第 8 页 / 飞书多维表证据</span>
+          <h2>真实字段、真实表格，支撑提效口径。</h2>
+          <div class="evidence-metrics">
+            <div class="evidence-metric"><strong>50→5</strong><span>从手动整理到生成后质检，释放老师重复整理时间。</span></div>
+            <div class="evidence-metric"><strong>12</strong><span>Project B 课堂样本，小范围不夸大，但证据层次已经铺开。</span></div>
+            <div class="evidence-metric"><strong>5维</strong><span>忠实度、具体性、用户适配、行动明确、风险标记。</span></div>
+            <div class="evidence-metric"><strong>3视图</strong><span>学生复习页、助教检查页、飞书多维表来自同一份课堂数据。</span></div>
+          </div>
+          <div class="bullet"><h3>复用点</h3><p>复用性不是“截图漂亮”，而是字段、页面模板和检查 SOP 可以被其他班级复用。</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>证据页不要抽象化，用真实截图说话</span></div>
+    </section>
+
+    <section class="slide" data-title="反馈和边界">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark">NC</span><span>反馈和边界</span></div>
+        <span>真实场景推动迭代</span>
+      </div>
+      <div class="content">
+        <div>
+          <span class="kicker">第 9 页 / 反馈和边界</span>
+          <h2>老师、助教、顾问三类反馈，让 Project B 从“生成内容”收敛成“服务流程”。</h2>
+          <div class="feedback-grid">
+            <div class="feedback teacher-feedback">
+              <h3>老师反馈 <span class="tag">家长追问</span></h3>
+              <img class="zoomable" src="assets/teacher-feedback.jpg" alt="老师反馈截图" />
+              <p>家长关心孩子上课状态、后续加强点和课后该做什么，所以结果要能回答服务追问。</p>
+            </div>
+            <div class="feedback">
+              <h3>助教反馈 <span class="tag">轻量跟进</span></h3>
+              <img class="zoomable" src="assets/ta-feedback.jpg" alt="助教反馈截图" />
+              <p>助教需要更清楚的检查项，但不能增加很重后台，所以先保留最关键的两个动作。</p>
+            </div>
+            <div class="feedback">
+              <h3>顾问反馈 <span class="tag">服务可见</span></h3>
+              <img class="zoomable" src="assets/consultant-feedback.jpg" alt="顾问反馈截图" />
+              <p>顾问更关心机构做了什么、后续课程建议和课后复习建议能不能进入沟通链路。</p>
+            </div>
+          </div>
+          <div class="boundary">
+            <div>当前是小范围 MVP，不说大规模推广。</div>
+            <div>不声称已经证明提分，只讲服务流程和效率观察。</div>
+            <div>下一步补权限、家长视图和更多课堂样本。</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>空格 / 右方向键</span><span>三张反馈截图均可点击放大</span></div>
+    </section>
+
+    <div class="progress" id="progress"></div>
+    <nav class="jump-nav" aria-label="快速跳转">
+      <button type="button" data-jump="0">封面</button>
+      <button type="button" data-jump="1">定位</button>
+      <button type="button" data-jump="2">流程</button>
+      <button type="button" data-jump="3">视频</button>
+      <button type="button" data-jump="4">页面</button>
+      <button type="button" data-jump="5">实现</button>
+      <button type="button" data-jump="6">迭代</button>
+      <button type="button" data-jump="7">表格</button>
+      <button type="button" data-jump="8">反馈</button>
+    </nav>
+    <div class="pager" aria-label="Deck controls">
+      <button type="button" id="prevBtn" aria-label="上一页">‹</button>
+      <span id="pageText">1 / 9</span>
+      <button type="button" id="nextBtn" aria-label="下一页">›</button>
+    </div>
+  </main>
+
+  <div class="zoom-overlay" id="zoomOverlay" role="dialog" aria-modal="true" aria-label="截图放大预览">
+    <img id="zoomImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" />
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.getElementById("progress");
+    const pageText = document.getElementById("pageText");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const overlay = document.getElementById("zoomOverlay");
+    const zoomImage = document.getElementById("zoomImage");
+    const jumpButtons = Array.from(document.querySelectorAll("[data-jump]"));
+    let index = 0;
+
+    function stopVideos() {
+      document.querySelectorAll("video").forEach((video) => {
+        if (!video.paused) video.pause();
+      });
+    }
+
+    function showSlide(nextIndex) {
+      const bounded = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      if (bounded === index) return;
+      stopVideos();
+      slides[index].classList.remove("active");
+      index = bounded;
+      slides[index].classList.add("active");
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      pageText.textContent = `${index + 1} / ${slides.length}`;
+      jumpButtons.forEach((button) => {
+        button.classList.toggle("active", Number(button.dataset.jump) === index);
+      });
+      document.title = `Project B | ${slides[index].dataset.title || "HTML 路演 Deck"}`;
+    }
+
+    function nextSlide() { showSlide(index + 1); }
+    function prevSlide() { showSlide(index - 1); }
+
+    prevBtn.addEventListener("click", prevSlide);
+    nextBtn.addEventListener("click", nextSlide);
+    jumpButtons.forEach((button) => {
+      button.addEventListener("click", () => showSlide(Number(button.dataset.jump)));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (overlay.classList.contains("open")) {
+        if (event.key === "Escape" || event.key === " " || event.key === "Enter") {
+          overlay.classList.remove("open");
+          event.preventDefault();
+        }
+        return;
+      }
+      const activeElement = document.activeElement;
+      const typing = activeElement && ["INPUT", "TEXTAREA", "SELECT"].includes(activeElement.tagName);
+      if (typing) return;
+      if (/^[1-9]$/.test(event.key)) {
+        showSlide(Number(event.key) - 1);
+        event.preventDefault();
+      }
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        nextSlide();
+        event.preventDefault();
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        prevSlide();
+        event.preventDefault();
+      }
+    });
+
+    document.querySelectorAll(".zoomable").forEach((img) => {
+      img.addEventListener("click", () => {
+        zoomImage.src = img.currentSrc || img.src;
+        zoomImage.alt = img.alt || "截图放大预览";
+        overlay.classList.add("open");
+      });
+    });
+    overlay.addEventListener("click", () => overlay.classList.remove("open"));
+    progress.style.width = `${(1 / slides.length) * 100}%`;
+    jumpButtons[0]?.classList.add("active");
+  </script>
+</body>
+</html>
