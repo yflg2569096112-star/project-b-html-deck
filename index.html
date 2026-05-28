@@ -539,6 +539,33 @@
       line-height: 1.48;
       font-weight: 900;
     }
+    .page-proof-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .page-proof {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 10px 24px rgba(16, 24, 40, 0.05);
+    }
+    .page-proof strong {
+      color: var(--blue);
+      font-size: 17px;
+      font-weight: 950;
+    }
+    .page-proof span {
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 780;
+    }
 
     .timeline {
       display: grid;
@@ -592,6 +619,111 @@
       box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
     }
     .quote strong { color: var(--blue); }
+    .build-layout {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-top: 24px;
+    }
+    .build-road {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .build-node {
+      position: relative;
+      min-height: 150px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .build-node b {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #eef5ff;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 950;
+    }
+    .build-node:nth-child(4) b,
+    .build-node:nth-child(5) b { background: #eaf8f0; color: var(--green); }
+    .build-node:nth-child(6) b { background: #fff3df; color: #b85b00; }
+    .build-node h3 {
+      margin-top: 12px;
+      color: var(--navy);
+      font-size: 20px;
+    }
+    .build-node p {
+      margin-top: 7px;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.42;
+      font-weight: 740;
+    }
+    .tool-roles {
+      display: grid;
+      gap: 12px;
+    }
+    .tool-role {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+    .tool-role strong {
+      color: var(--navy);
+      font-size: 27px;
+      line-height: 1.05;
+      font-weight: 950;
+    }
+    .tool-role span {
+      color: #344054;
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 780;
+    }
+    .tool-role.emphasis {
+      background: linear-gradient(135deg, #0d2b63, #2b9ec5);
+      color: white;
+    }
+    .tool-role.emphasis strong,
+    .tool-role.emphasis span { color: white; }
+    .build-proof-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .mini-stat {
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f8fbff;
+    }
+    .mini-stat strong {
+      display: block;
+      color: var(--blue);
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 950;
+    }
+    .mini-stat span {
+      display: block;
+      margin-top: 6px;
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 760;
+    }
 
     .evidence {
       display: grid;
@@ -965,6 +1097,8 @@
       .flow-step { min-height: 280px; }
       .flow-step::after { display: none; }
       .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .build-layout { grid-template-columns: 1fr; }
+      .build-road { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .impact-layout { grid-template-columns: 1fr; }
       .iteration-grid { grid-template-columns: 1fr; }
       .proof-grid { grid-template-columns: 1fr; }
@@ -1005,7 +1139,7 @@
           <div class="chips">
             <span class="chip">AI 时代服务升级</span>
             <span class="chip">50min → 5min</span>
-            <span class="chip">90 秒稳定视频</span>
+            <span class="chip">90 秒真实录屏</span>
             <span class="chip">真实妙搭页面</span>
             <span class="chip">飞书多维表留痕</span>
             <span class="chip">三类真实反馈</span>
@@ -1013,7 +1147,7 @@
         </div>
         <div class="cover-media">
           <video src="assets/projectb-demo-90s.mp4" controls preload="metadata" poster="assets/student-review-cards.jpg"></video>
-          <div class="cover-caption">现场策略：先用录屏稳定展示完整流程，再打开真实页面补证。</div>
+          <div class="cover-caption">现场顺序：先看完整服务流程，再打开已发布页面和真实截图证据。</div>
         </div>
       </div>
       <div class="footer"><span>空格 / 右方向键</span><span>主展示：HTML Slide Deck</span></div>
@@ -1042,7 +1176,7 @@
             <div class="stat-grid">
               <div class="stat-card accent"><strong>10<small>x</small></strong><span>理论整理效率提升，用于说明方向，不夸大成最终产能。</span></div>
               <div class="stat-card"><strong>12</strong><span>Project B 课堂样本，后续继续补更多班级。</span></div>
-              <div class="stat-card"><strong>90<small>s</small></strong><span>录屏覆盖完整操作链路，现场展示稳定。</span></div>
+              <div class="stat-card"><strong>90<small>s</small></strong><span>视频覆盖完整操作链路，后面用真实页面和表格补证。</span></div>
               <div class="stat-card"><strong>3</strong><span>学生页、助教页、飞书多维表三种服务视图。</span></div>
             </div>
           </div>
@@ -1111,26 +1245,30 @@
 
     <section class="slide soft" data-title="真实页面入口">
       <div class="topline">
-        <div class="brand"><span class="brand-mark">NC</span><span>真实页面入口</span></div>
-        <span>评委追问真实性时，直接打开</span>
+        <div class="brand"><span class="brand-mark">NC</span><span>真实妙搭 App</span></div>
+        <span>已发布页面，可直接打开验证</span>
       </div>
       <div class="content split">
         <div>
-          <span class="kicker">第 5 页 / 真实页面入口</span>
-          <h2>录屏负责稳定演示，真实页面负责补证。</h2>
-          <p class="lead">这个页面已经可以打开。现场不重新跑 AI，是为了避免网络和生成等待影响节奏；但学生复习页本身不是 PPT 动画。</p>
-          <div class="button-row">
-            <a class="button primary" href="https://mcn6lcas1bhc.aiforce.cloud/app/app_4k1czx4p1rthf/student-review-v2?student_id=test_reading_20260430" target="_blank" rel="noreferrer">打开真实妙搭页面</a>
-            <a class="button secondary" href="../ProjectB_2026微创新大赛路演PPT_Codex_V9.pptx">打开 V9 PPT 备份</a>
+          <span class="kicker">第 5 页 / 真实妙搭 App</span>
+          <h2>视频里的学生复习页，现场可以直接打开。</h2>
+          <p class="lead">这一页不再解释演示策略，只做真实性证明：Project B 已经是一个发布出来的妙搭 App，学生可以通过专属链接进入自己的复习卡。</p>
+          <div class="page-proof-list">
+            <div class="page-proof"><strong>已发布</strong><span>不是 PPT 动画，也不是静态截图；有真实 URL 可以访问。</span></div>
+            <div class="page-proof"><strong>按学生进入</strong><span>通过 student_id 打开对应学生的个人复习内容。</span></div>
+            <div class="page-proof"><strong>权限口径</strong><span>当前用专属链接轻量隔离，后续按学生、家长、老师、管理员做角色权限。</span></div>
           </div>
-          <div class="callout">权限口径：当前 MVP 用学生专属链接做轻量隔离；后续按学生、家长、老师、管理员设计角色权限。</div>
+          <div class="button-row">
+            <a class="button primary" href="https://mcn6lcas1bhc.aiforce.cloud/app/app_4k1czx4p1rthf/student-review-v2?student_id=test_reading_20260430" target="_blank" rel="noreferrer">打开学生专属页</a>
+            <a class="button secondary" href="https://mcn6lcas1bhc.aiforce.cloud/app/app_4k1czx4p1rthf" target="_blank" rel="noreferrer">打开妙搭应用首页</a>
+          </div>
         </div>
         <div class="screen-frame">
-          <img class="zoomable" src="assets/student-review-cards.jpg" alt="真实学生复习页截图" data-zoom-label="真实妙搭页面入口：现场用录屏保证稳定，评委追问时可以打开这个已发布页面。" />
-          <div class="frame-caption">学生看到的是从课堂内容整理出的个人复习卡。</div>
+          <img class="zoomable" src="assets/student-review-cards.jpg" alt="真实学生复习页截图" data-zoom-label="真实学生复习页：这是妙搭 App 中可打开的学生端页面，不是 PPT 动画。" />
+          <div class="frame-caption">学生端真实页面：从课堂内容整理出的个人复习卡。</div>
         </div>
       </div>
-      <div class="footer"><span>空格 / 右方向键</span><span>30 秒真实页面补证</span></div>
+      <div class="footer"><span>空格 / 右方向键</span><span>这一页只证明真实可打开，不再解释录屏策略</span></div>
     </section>
 
     <section class="slide" data-title="飞书妙搭实现时间线">
@@ -1141,18 +1279,26 @@
       <div class="content">
         <div>
           <span class="kicker">第 6 页 / 飞书妙搭实现时间线</span>
-          <h2>从一个课后服务断点，迭代成可演示的妙搭 MVP。</h2>
-          <div class="timeline">
-            <div class="time-step"><b>1</b><h3>找断点</h3><p>课堂内容很多，但学生下课后不知道复习什么，助教也缺少检查抓手。</p></div>
-            <div class="time-step"><b>2</b><h3>妙搭原型</h3><p>用飞书妙搭搭老师输入页和确认流程，先把服务动作跑起来。</p></div>
-            <div class="time-step"><b>3</b><h3>AI 生成</h3><p>把课堂笔记拆成复习卡、例句、方法点和助教检查项。</p></div>
-            <div class="time-step"><b>4</b><h3>多维表沉淀</h3><p>确认后写入飞书多维表，用学生 ID、日期、类型和状态承接。</p></div>
-            <div class="time-step"><b>5</b><h3>三种视图</h3><p>同一份数据拆成学生复习页、助教检查页和后台记录。</p></div>
-            <div class="time-step"><b>6</b><h3>反馈迭代</h3><p>结合老师、助教、顾问反馈，加质检、收敛字段和页面表达。</p></div>
+          <h2>不是写一个 prompt，而是用妙搭把课后服务流程搭出来。</h2>
+          <div class="build-layout">
+            <div class="build-road" aria-label="Project B 实现路线图">
+              <div class="build-node"><b>01</b><h3>找断点</h3><p>课后内容会流失，学生和助教都缺少抓手。</p></div>
+              <div class="build-node"><b>02</b><h3>妙搭出原型</h3><p>先搭老师输入页、确认页和学生入口。</p></div>
+              <div class="build-node"><b>03</b><h3>AI 生成</h3><p>把笔记拆成词汇、方法、例句和任务。</p></div>
+              <div class="build-node"><b>04</b><h3>5 维质检</h3><p>老师确认前先看忠实度、具体性和风险。</p></div>
+              <div class="build-node"><b>05</b><h3>多维表入库</h3><p>用学生 ID、日期、类型和状态沉淀数据。</p></div>
+              <div class="build-node"><b>06</b><h3>三端服务</h3><p>学生复习、助教检查、后续家长沟通。</p></div>
+            </div>
+            <div class="tool-roles">
+              <div class="tool-role emphasis"><strong>飞书妙搭</strong><span>承接页面、流程、发布入口，是这个 MVP 的服务骨架。</span></div>
+              <div class="tool-role"><strong>AI 生成 + 质检</strong><span>负责把课堂笔记结构化，并在进入学生页前做质量守门。</span></div>
+              <div class="tool-role"><strong>飞书多维表</strong><span>承接真实字段、学生样本和复习状态，让内容可沉淀。</span></div>
+            </div>
           </div>
-          <div class="build-note">
-            <div class="quote"><strong>口播压缩版：</strong>我用 Codex 和 Claude Code 做方案推进和风险 review，再用飞书妙搭承接页面、流程和数据。Project B 迭代了 70 多个版本，中间靠飞书培训和运维群反馈不断修 bug、收敛字段和页面。</div>
-            <div class="quote"><strong>讲法边界：</strong>强调这是展示性 MVP，不夸大成大规模推广；重点讲“我怎样用飞书妙搭把课后服务流程跑通”。</div>
+          <div class="build-proof-row">
+            <div class="mini-stat"><strong>70+</strong><span>Project B 版本迭代，不是一次生成。</span></div>
+            <div class="mini-stat"><strong>12</strong><span>课堂样本继续补充，先保持小范围口径。</span></div>
+            <div class="mini-stat"><strong>1min</strong><span>这一页只讲做法，不抢主流程时间。</span></div>
           </div>
         </div>
       </div>
