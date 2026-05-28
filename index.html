@@ -746,6 +746,82 @@
       background: #eaf8f0;
       color: var(--green);
     }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      min-height: 470px;
+    }
+    .proof-card {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 10px;
+      min-height: 220px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+      overflow: hidden;
+    }
+    .proof-card.wide {
+      grid-column: 1 / -1;
+      min-height: 236px;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      grid-template-rows: auto 1fr;
+      align-items: stretch;
+    }
+    .proof-card h3 {
+      font-size: 20px;
+      color: var(--navy);
+    }
+    .proof-card p {
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.42;
+      font-weight: 750;
+    }
+    .proof-shot {
+      width: 100%;
+      height: 126px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #f6f8fb;
+      object-fit: cover;
+      object-position: center;
+      cursor: zoom-in;
+    }
+    .proof-card.wide .proof-shot {
+      grid-row: 1 / -1;
+      height: 190px;
+      object-position: left top;
+    }
+    .version-zoom {
+      display: grid;
+      align-content: center;
+      gap: 10px;
+      min-height: 190px;
+      padding: 14px;
+      border: 1px solid #f3c178;
+      border-radius: 10px;
+      background: #fff8ec;
+    }
+    .version-zoom strong {
+      color: #b85b00;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .version-zoom-img {
+      height: 92px;
+      border: 1px solid #f3c178;
+      border-radius: 8px;
+      background-image: url("assets/miaoda-v72-publish.png");
+      background-repeat: no-repeat;
+      background-size: 258%;
+      background-position: 87% 7%;
+      box-shadow: inset 0 0 0 999px rgba(255,255,255,0.03);
+    }
 
     .feedback-grid {
       display: grid;
@@ -871,6 +947,15 @@
       .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .impact-layout { grid-template-columns: 1fr; }
       .iteration-grid { grid-template-columns: 1fr; }
+      .proof-grid { grid-template-columns: 1fr; }
+      .proof-card.wide {
+        grid-column: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+      }
+      .proof-card.wide .proof-shot {
+        grid-row: auto;
+      }
       .jump-nav {
         max-width: calc(100vw - 160px);
         overflow-x: auto;
@@ -895,9 +980,10 @@
       <div class="content cover-grid">
         <div>
           <span class="kicker">第 1 页 / 封面</span>
-          <h1>用飞书妙搭，把雅思课堂内容变成课后服务流程。</h1>
-          <p class="lead">老师上传课堂笔记，AI 生成复习卡和助教检查项；老师确认后进入飞书多维表，最后形成学生可复习、助教可跟进、后台可留痕的数据资产。</p>
+          <h1>用飞书 AI 和妙搭，升级雅思课后服务体验。</h1>
+          <p class="lead">把老师上课后容易流失的课堂内容，用来给学生复习、给助教检查，并沉淀进学生知识库，最终形成个性化学习和更可见的家长服务体验。</p>
           <div class="chips">
+            <span class="chip">AI 时代服务升级</span>
             <span class="chip">50min → 5min</span>
             <span class="chip">90 秒稳定视频</span>
             <span class="chip">真实妙搭页面</span>
@@ -921,8 +1007,8 @@
       <div class="content">
         <div>
           <span class="kicker">第 2 页 / 一句话定位</span>
-          <h2>Project B 是一个用飞书妙搭搭建的雅思课后服务 MVP。</h2>
-          <p class="lead">它解决的不是“AI 会不会写一段反馈”，而是老师讲过的内容，能不能稳定进入学生复习、助教跟进和飞书数据沉淀。</p>
+          <h2>一句话：让课堂流失内容，变成个性化课后服务资产。</h2>
+          <p class="lead">它解决的不是“AI 会不会写一段反馈”，而是老师讲过的内容，能不能稳定进入学生复习、助教检查、学生知识库和家长服务沟通。</p>
           <div class="impact-layout">
             <div class="hero-stat">
               <span class="stat-kicker">单课服务包整理时间</span>
@@ -940,7 +1026,7 @@
               <div class="stat-card"><strong>3</strong><span>学生页、助教页、飞书多维表三种服务视图。</span></div>
             </div>
           </div>
-          <div class="callout">讲法重点：PPT 是证据材料，主叙事是“真实流程 + 飞书妙搭实现 + 反馈推动迭代”。</div>
+          <div class="callout">讲法重点：目标是服务升级。主叙事是“真实流程 + 飞书 AI / 妙搭实现 + 反馈推动迭代”。</div>
         </div>
       </div>
       <div class="footer"><span>空格 / 右方向键</span><span>开场 15 秒</span></div>
@@ -1015,7 +1101,7 @@
           <p class="lead">这个页面已经可以打开。现场不重新跑 AI，是为了避免网络和生成等待影响节奏；但学生复习页本身不是 PPT 动画。</p>
           <div class="button-row">
             <a class="button primary" href="https://mcn6lcas1bhc.aiforce.cloud/app/app_4k1czx4p1rthf/student-review-v2?student_id=test_reading_20260430" target="_blank" rel="noreferrer">打开真实妙搭页面</a>
-            <a class="button secondary" href="ProjectB_2026微创新大赛路演PPT_Codex_V9.pptx">打开 V9 PPT 备份</a>
+            <a class="button secondary" href="../ProjectB_2026微创新大赛路演PPT_Codex_V9.pptx">打开 V9 PPT 备份</a>
           </div>
           <div class="callout">权限口径：当前 MVP 用学生专属链接做轻量隔离；后续按学生、家长、老师、管理员设计角色权限。</div>
         </div>
@@ -1061,7 +1147,7 @@
       <div class="content">
         <div>
           <span class="kicker">第 7 页 / 迭代过程</span>
-          <h2>70+ 次 Project B 迭代，把想法修成能现场演示的服务流程。</h2>
+          <h2>70+ 次 Project B 迭代：有妙搭反馈、老师肯定，也有版本记录。</h2>
           <div class="iteration-grid">
             <div class="iteration-number">
               <span class="stat-kicker">Project B version history</span>
@@ -1069,22 +1155,29 @@
               <span class="sub">从 idea、plan、互相 review，到 bug 修复和页面收敛。</span>
               <p>我先让妙搭出一版 plan，再把 idea 交给 Codex 和 Claude Code 互相 review，找风险点、拆任务、推进实现。这个过程不是一次生成，而是反复验证、修 bug、收敛字段和流程。</p>
             </div>
-            <div class="process-stack">
-              <div class="process-card">
-                <strong>Plan</strong>
-                <div><h3>妙搭先出方案</h3><p>先用妙搭把 idea 变成可执行计划，明确老师输入、学生页、助教页和飞书表格之间的关系。</p></div>
+            <div class="proof-grid">
+              <div class="proof-card">
+                <h3>妙搭反馈机制</h3>
+                <img class="proof-shot zoomable" src="assets/miaoda-feedback-loop.png" alt="妙搭不断提问澄清，让作品更完整" />
+                <p>它会持续追问输入能力、内容来源和字段设计，推动方案更准确。</p>
               </div>
-              <div class="process-card accent">
-                <strong>Review</strong>
-                <div><h3>Codex × Claude Code 互相 review</h3><p>让两个工具交叉检查风险点：字段是否够、流程是否断、演示是否稳定、权限怎么讲。</p></div>
+              <div class="proof-card">
+                <h3>组长老师肯定</h3>
+                <img class="proof-shot zoomable" src="assets/leader-feedback-value.png" alt="组长老师肯定系统有商业价值" />
+                <p>老师建议尝试，并肯定课后服务系统有商业价值和引流价值。</p>
               </div>
-              <div class="process-card green">
-                <strong>70+</strong>
-                <div><h3>Project B 反复修 bug</h3><p>报名后开始密集迭代，Project B 修改 70 多个版本；另一个小项目也迭代约 40-50 次。</p></div>
+              <div class="proof-card">
+                <h3>飞书运维群响应</h3>
+                <img class="proof-shot zoomable" src="assets/feishu-ops-support.png" alt="飞书专属运维群及时响应并记录产品评估" />
+                <p>专属运维群里能及时答疑，也会记录问题反馈给产品评估。</p>
               </div>
-              <div class="process-card">
-                <strong>Feishu</strong>
-                <div><h3>飞书培训和运维群支持</h3><p>培训内容和运维群老师的快速答疑，帮助我一步步解决页面、调试和流程问题。</p></div>
+              <div class="proof-card wide">
+                <img class="proof-shot zoomable" src="assets/miaoda-v72-publish.png" alt="妙搭发布面板显示已更新到 V72" />
+                <div class="version-zoom">
+                  <strong>右上角放大：Updated to V72</strong>
+                  <div class="version-zoom-img" aria-label="V72 版本记录放大图"></div>
+                  <p>版本记录证明它不是一次生成，而是一路改到 70 多个版本。</p>
+                </div>
               </div>
             </div>
           </div>
