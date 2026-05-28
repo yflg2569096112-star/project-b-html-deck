@@ -464,7 +464,7 @@
       height: 168px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      object-fit: cover;
+      object-fit: contain;
       background: var(--soft);
       cursor: zoom-in;
     }
@@ -597,14 +597,15 @@
       display: grid;
       grid-template-columns: 1.28fr 0.72fr;
       gap: 28px;
-      align-items: stretch;
+      align-items: center;
       min-height: 0;
     }
     .evidence-main img {
       width: 100%;
-      height: 62vh;
-      object-fit: cover;
-      object-position: left center;
+      height: auto;
+      max-height: 62vh;
+      object-fit: contain;
+      object-position: center;
       background: #f6f8fb;
       cursor: zoom-in;
     }
@@ -784,18 +785,18 @@
     }
     .proof-shot {
       width: 100%;
-      height: 126px;
+      height: 142px;
       border: 1px solid var(--line);
       border-radius: 9px;
       background: #f6f8fb;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       cursor: zoom-in;
     }
     .proof-card.wide .proof-shot {
       grid-row: 1 / -1;
       height: 190px;
-      object-position: left top;
+      object-position: center;
     }
     .version-zoom {
       display: grid;
@@ -813,13 +814,13 @@
       line-height: 1.2;
     }
     .version-zoom-img {
-      height: 92px;
+      width: 100%;
+      height: 118px;
       border: 1px solid #f3c178;
       border-radius: 8px;
-      background-image: url("assets/miaoda-v72-publish.png");
-      background-repeat: no-repeat;
-      background-size: 258%;
-      background-position: 87% 7%;
+      object-fit: contain;
+      background: white;
+      cursor: zoom-in;
       box-shadow: inset 0 0 0 999px rgba(255,255,255,0.03);
     }
 
@@ -926,13 +927,32 @@
       background: rgba(5, 11, 24, 0.9);
     }
     .zoom-overlay.open { display: grid; }
-    .zoom-overlay img {
+    .zoom-dialog {
+      display: grid;
+      gap: 12px;
       max-width: 96vw;
-      max-height: 92vh;
+      max-height: 94vh;
+      margin: 0;
+    }
+    .zoom-dialog img {
+      max-width: 96vw;
+      max-height: 84vh;
       object-fit: contain;
       border-radius: 8px;
       box-shadow: 0 28px 80px rgba(0,0,0,0.5);
       background: white;
+    }
+    .zoom-caption {
+      max-width: min(96vw, 1180px);
+      justify-self: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.94);
+      color: #101828;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 850;
+      text-align: center;
     }
 
     @media (max-width: 1100px) {
@@ -1045,31 +1065,31 @@
             <div class="flow-step">
               <span class="flow-num">1</span>
               <h3>课堂笔记输入</h3>
-              <img class="thumb zoomable" src="assets/confirm-writein.jpg" alt="老师确认写入截图" />
+              <img class="thumb zoomable" src="assets/confirm-writein.jpg" alt="老师确认写入截图" data-zoom-label="老师确认写入：AI 内容进入学生页和飞书表格前，先由老师确认。" />
               <p>老师把课堂笔记或课后总结放进页面，不再从零写长反馈。</p>
             </div>
             <div class="flow-step">
               <span class="flow-num">2</span>
               <h3>AI 结构化生成</h3>
-              <img class="thumb zoomable" src="assets/quality-modal.jpg" alt="生成后质检截图" />
+              <img class="thumb zoomable" src="assets/quality-modal.jpg" alt="生成后质检截图" data-zoom-label="生成后质检：忠实度、具体性、用户适配、行动明确和风险标记先过一遍。" />
               <p>把词汇、方法、易错点、任务拆成学生复习卡和助教检查项。</p>
             </div>
             <div class="flow-step">
               <span class="flow-num">3</span>
               <h3>老师确认入库</h3>
-              <img class="thumb zoomable" src="assets/bitable-table.jpg" alt="飞书多维表截图" />
+              <img class="thumb zoomable" src="assets/bitable-table-focus.jpg" alt="飞书多维表截图" data-zoom-src="assets/bitable-table.jpg" data-zoom-label="飞书多维表：学生 ID、日期、类型、核心内容和复习状态沉淀在真实表格里。" />
               <p>AI 内容进入学生页前，先经过老师确认和质量守门。</p>
             </div>
             <div class="flow-step">
               <span class="flow-num">4</span>
               <h3>学生个人复习页</h3>
-              <img class="thumb zoomable" src="assets/student-review-cards.jpg" alt="学生复习页截图" />
+              <img class="thumb zoomable" src="assets/student-review-cards.jpg" alt="学生复习页截图" data-zoom-label="学生复习页：同一份课堂内容被拆成学生能看的复习卡片。" />
               <p>学生看到整理后的个人复习卡，而不是原始课堂记录。</p>
             </div>
             <div class="flow-step">
               <span class="flow-num">5</span>
               <h3>助教检查页</h3>
-              <img class="thumb zoomable" src="assets/ta-check-view.jpg" alt="助教检查页截图" />
+              <img class="thumb zoomable" src="assets/ta-check-view.jpg" alt="助教检查页截图" data-zoom-label="助教检查页：助教围绕作业完成和核心单词掌握做轻量检查。" />
               <p>助教只抓关键动作：作业是否完成、核心单词是否掌握。</p>
             </div>
           </div>
@@ -1106,7 +1126,7 @@
           <div class="callout">权限口径：当前 MVP 用学生专属链接做轻量隔离；后续按学生、家长、老师、管理员设计角色权限。</div>
         </div>
         <div class="screen-frame">
-          <img class="zoomable" src="assets/student-review-cards.jpg" alt="真实学生复习页截图" />
+          <img class="zoomable" src="assets/student-review-cards.jpg" alt="真实学生复习页截图" data-zoom-label="真实妙搭页面入口：现场用录屏保证稳定，评委追问时可以打开这个已发布页面。" />
           <div class="frame-caption">学生看到的是从课堂内容整理出的个人复习卡。</div>
         </div>
       </div>
@@ -1158,24 +1178,24 @@
             <div class="proof-grid">
               <div class="proof-card">
                 <h3>妙搭反馈机制</h3>
-                <img class="proof-shot zoomable" src="assets/miaoda-feedback-loop.png" alt="妙搭不断提问澄清，让作品更完整" />
+                <img class="proof-shot zoomable" src="assets/miaoda-feedback-focus.png" alt="妙搭不断提问澄清，让作品更完整" data-zoom-label="妙搭反馈机制：它不是直接出结果，而是追问输入来源、字段设计和整合方式。" />
                 <p>它会持续追问输入能力、内容来源和字段设计，推动方案更准确。</p>
               </div>
               <div class="proof-card">
                 <h3>组长老师肯定</h3>
-                <img class="proof-shot zoomable" src="assets/leader-feedback-value.png" alt="组长老师肯定系统有商业价值" />
+                <img class="proof-shot zoomable" src="assets/leader-feedback-focus.png" alt="组长老师肯定系统有商业价值" data-zoom-label="组长老师反馈：课后服务系统有附加产品、复习效率和引流价值。" />
                 <p>老师建议尝试，并肯定课后服务系统有商业价值和引流价值。</p>
               </div>
               <div class="proof-card">
                 <h3>飞书运维群响应</h3>
-                <img class="proof-shot zoomable" src="assets/feishu-ops-support.png" alt="飞书专属运维群及时响应并记录产品评估" />
+                <img class="proof-shot zoomable" src="assets/feishu-ops-support-focus.png" alt="飞书专属运维群及时响应并记录产品评估" data-zoom-label="飞书运维群响应：专属群及时答疑，并把问题记录给产品评估。" />
                 <p>专属运维群里能及时答疑，也会记录问题反馈给产品评估。</p>
               </div>
               <div class="proof-card wide">
-                <img class="proof-shot zoomable" src="assets/miaoda-v72-publish.png" alt="妙搭发布面板显示已更新到 V72" />
+                <img class="proof-shot zoomable" src="assets/miaoda-v72-publish.png" alt="妙搭发布面板显示已更新到 V72" data-zoom-label="完整截图：妙搭应用已发布，右上角发布面板记录了 V72 版本。" />
                 <div class="version-zoom">
-                  <strong>右上角放大：Updated to V72</strong>
-                  <div class="version-zoom-img" aria-label="V72 版本记录放大图"></div>
+                  <strong>右上角局部：Updated to V72</strong>
+                  <img class="version-zoom-img zoomable" src="assets/miaoda-v72-version-crop.png" alt="V72 版本记录局部放大图" data-zoom-label="V72 版本记录局部：5/6 10:24 Updated to V72，说明 Project B 已经历 70 多次迭代。" />
                   <p>版本记录证明它不是一次生成，而是一路改到 70 多个版本。</p>
                 </div>
               </div>
@@ -1193,7 +1213,7 @@
       </div>
       <div class="content evidence">
         <div class="screen-frame evidence-main">
-          <img class="zoomable" src="assets/bitable-table.jpg" alt="飞书多维表真实截图" />
+          <img class="zoomable" src="assets/bitable-table-focus.jpg" alt="飞书多维表真实截图" data-zoom-src="assets/bitable-table.jpg" data-zoom-label="真实飞书多维表：核心字段、学生样本和复习状态都在同一张表里。" />
         </div>
         <div class="evidence-side">
           <span class="kicker">第 8 页 / 飞书多维表证据</span>
@@ -1222,17 +1242,17 @@
           <div class="feedback-grid">
             <div class="feedback teacher-feedback">
               <h3>老师反馈 <span class="tag">家长追问</span></h3>
-              <img class="zoomable" src="assets/teacher-feedback.jpg" alt="老师反馈截图" />
+              <img class="zoomable" src="assets/teacher-feedback.jpg" alt="老师反馈截图" data-zoom-label="老师反馈：家长会追问孩子上课状态、后续加强点和课后应该做什么。" />
               <p>家长关心孩子上课状态、后续加强点和课后该做什么，所以结果要能回答服务追问。</p>
             </div>
             <div class="feedback">
               <h3>助教反馈 <span class="tag">轻量跟进</span></h3>
-              <img class="zoomable" src="assets/ta-feedback.jpg" alt="助教反馈截图" />
+              <img class="zoomable" src="assets/ta-feedback.jpg" alt="助教反馈截图" data-zoom-label="助教反馈：需要清楚检查项，但不能增加很重后台。" />
               <p>助教需要更清楚的检查项，但不能增加很重后台，所以先保留最关键的两个动作。</p>
             </div>
             <div class="feedback">
               <h3>顾问反馈 <span class="tag">服务可见</span></h3>
-              <img class="zoomable" src="assets/consultant-feedback.jpg" alt="顾问反馈截图" />
+              <img class="zoomable" src="assets/consultant-feedback.jpg" alt="顾问反馈截图" data-zoom-label="顾问反馈：服务价值要能进入沟通链路，尤其是后续课程和复习建议。" />
               <p>顾问更关心机构做了什么、后续课程建议和课后复习建议能不能进入沟通链路。</p>
             </div>
           </div>
@@ -1266,7 +1286,10 @@
   </main>
 
   <div class="zoom-overlay" id="zoomOverlay" role="dialog" aria-modal="true" aria-label="截图放大预览">
-    <img id="zoomImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" />
+    <figure class="zoom-dialog" id="zoomDialog">
+      <img id="zoomImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" />
+      <figcaption class="zoom-caption" id="zoomCaption">截图放大预览</figcaption>
+    </figure>
   </div>
 
   <script>
@@ -1276,7 +1299,9 @@
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     const overlay = document.getElementById("zoomOverlay");
+    const zoomDialog = document.getElementById("zoomDialog");
     const zoomImage = document.getElementById("zoomImage");
+    const zoomCaption = document.getElementById("zoomCaption");
     const jumpButtons = Array.from(document.querySelectorAll("[data-jump]"));
     let index = 0;
 
@@ -1337,11 +1362,13 @@
 
     document.querySelectorAll(".zoomable").forEach((img) => {
       img.addEventListener("click", () => {
-        zoomImage.src = img.currentSrc || img.src;
+        zoomImage.src = img.dataset.zoomSrc || img.currentSrc || img.src;
         zoomImage.alt = img.alt || "截图放大预览";
+        zoomCaption.textContent = img.dataset.zoomLabel || img.alt || "截图放大预览";
         overlay.classList.add("open");
       });
     });
+    zoomDialog.addEventListener("click", (event) => event.stopPropagation());
     overlay.addEventListener("click", () => overlay.classList.remove("open"));
     progress.style.width = `${(1 / slides.length) * 100}%`;
     jumpButtons[0]?.classList.add("active");
