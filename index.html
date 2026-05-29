@@ -602,128 +602,96 @@
       line-height: 1.48;
       font-weight: 700;
     }
-    .build-note {
+    .credibility-arc {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 22px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
     }
-    .quote {
-      padding: 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #fff;
-      font-size: 18px;
-      line-height: 1.55;
-      font-weight: 850;
-      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
-    }
-    .quote strong { color: var(--blue); }
-    .build-layout {
-      display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
-      gap: 24px;
-      align-items: stretch;
-      margin-top: 24px;
-    }
-    .build-road {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-    .build-node {
+    .arc-card {
       position: relative;
-      min-height: 150px;
-      padding: 16px;
+      min-height: 270px;
+      padding: 18px;
       border: 1px solid var(--line);
       border-radius: 12px;
       background: white;
       box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
     }
-    .build-node b {
-      display: inline-grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
+    .arc-date {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
       background: #eef5ff;
       color: var(--blue);
       font-size: 14px;
       font-weight: 950;
     }
-    .build-node:nth-child(4) b,
-    .build-node:nth-child(5) b { background: #eaf8f0; color: var(--green); }
-    .build-node:nth-child(6) b { background: #fff3df; color: #b85b00; }
-    .build-node h3 {
+    .arc-card:nth-child(3) .arc-date { background: #eaf8f0; color: var(--green); }
+    .arc-card:nth-child(4) .arc-date { background: #fff3df; color: #b85b00; }
+    .arc-card h3 {
+      margin-top: 18px;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.18;
+    }
+    .arc-card p {
       margin-top: 12px;
-      color: var(--navy);
-      font-size: 20px;
-    }
-    .build-node p {
-      margin-top: 7px;
-      color: #344054;
-      font-size: 15px;
-      line-height: 1.42;
-      font-weight: 740;
-    }
-    .tool-roles {
-      display: grid;
-      gap: 12px;
-    }
-    .tool-role {
-      display: grid;
-      gap: 8px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
-    }
-    .tool-role strong {
-      color: var(--navy);
-      font-size: 27px;
-      line-height: 1.05;
-      font-weight: 950;
-    }
-    .tool-role span {
       color: #344054;
       font-size: 16px;
-      line-height: 1.45;
-      font-weight: 780;
+      line-height: 1.48;
+      font-weight: 740;
     }
-    .tool-role.emphasis {
-      background: linear-gradient(135deg, #0d2b63, #2b9ec5);
-      color: white;
+    .arc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
     }
-    .tool-role.emphasis strong,
-    .tool-role.emphasis span { color: white; }
-    .build-proof-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .mini-stat {
-      padding: 13px 15px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #f8fbff;
-    }
-    .mini-stat strong {
-      display: block;
-      color: var(--blue);
-      font-size: 26px;
-      line-height: 1;
+    .arc-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f4f7fb;
+      color: #344054;
+      font-size: 12px;
       font-weight: 950;
     }
-    .mini-stat span {
+    .credibility-bottom {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .credibility-note {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(16, 24, 40, 0.05);
+    }
+    .credibility-note strong {
       display: block;
-      margin-top: 6px;
+      color: var(--navy);
+      font-size: 21px;
+      font-weight: 950;
+    }
+    .credibility-note span {
+      display: block;
+      margin-top: 8px;
       color: #344054;
-      font-size: 14px;
-      line-height: 1.35;
+      font-size: 15px;
+      line-height: 1.45;
       font-weight: 760;
     }
+    .credibility-note.accent {
+      border-color: #f3c178;
+      background: #fff8ec;
+    }
+    .credibility-note.accent strong { color: #b85b00; }
 
     .evidence {
       display: grid;
@@ -1097,8 +1065,8 @@
       .flow-step { min-height: 280px; }
       .flow-step::after { display: none; }
       .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .build-layout { grid-template-columns: 1fr; }
-      .build-road { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .credibility-arc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .credibility-bottom { grid-template-columns: 1fr; }
       .impact-layout { grid-template-columns: 1fr; }
       .iteration-grid { grid-template-columns: 1fr; }
       .proof-grid { grid-template-columns: 1fr; }
@@ -1271,38 +1239,55 @@
       <div class="footer"><span>空格 / 右方向键</span><span>这一页只证明真实可打开，不再解释录屏策略</span></div>
     </section>
 
-    <section class="slide" data-title="飞书妙搭实现时间线">
+    <section class="slide" data-title="可信度证明">
       <div class="topline">
-        <div class="brand"><span class="brand-mark">NC</span><span>飞书妙搭实现时间线</span></div>
-        <span>“我是怎么做出来的”控制在 1 分钟内</span>
+        <div class="brand"><span class="brand-mark">NC</span><span>可信度证明</span></div>
+        <span>不是 5 月临时包装，而是 4 月真实服务链路收束</span>
       </div>
       <div class="content">
         <div>
-          <span class="kicker">第 6 页 / 飞书妙搭实现时间线</span>
-          <h2>不是写一个 prompt，而是用妙搭把课后服务流程搭出来。</h2>
-          <div class="build-layout">
-            <div class="build-road" aria-label="Project B 实现路线图">
-              <div class="build-node"><b>01</b><h3>找断点</h3><p>课后内容会流失，学生和助教都缺少抓手。</p></div>
-              <div class="build-node"><b>02</b><h3>妙搭出原型</h3><p>先搭老师输入页、确认页和学生入口。</p></div>
-              <div class="build-node"><b>03</b><h3>AI 生成</h3><p>把笔记拆成词汇、方法、例句和任务。</p></div>
-              <div class="build-node"><b>04</b><h3>5 维质检</h3><p>老师确认前先看忠实度、具体性和风险。</p></div>
-              <div class="build-node"><b>05</b><h3>多维表入库</h3><p>用学生 ID、日期、类型和状态沉淀数据。</p></div>
-              <div class="build-node"><b>06</b><h3>三端服务</h3><p>学生复习、助教检查、后续家长沟通。</p></div>
+          <span class="kicker">第 6 页 / 4 月到现在，我是怎么把它做出来的</span>
+          <h2>从 4 月课堂工具，到 5 月飞书服务 MVP。</h2>
+          <p class="lead">这不是临时做的展示页，而是一条真实教学服务链路的收束。</p>
+          <div class="credibility-arc" aria-label="Project B 可信度证明路径">
+            <div class="arc-card">
+              <span class="arc-date">4 月</span>
+              <h3>真实课堂材料已经在跑</h3>
+              <p>4 月学生档案、课后反馈、复习单元和飞书推送脚本已经存在，证明不是 5 月才开始想项目。</p>
+              <div class="arc-tags"><span>10 个学生档案</span><span>课后反馈</span><span>复习单元</span></div>
             </div>
-            <div class="tool-roles">
-              <div class="tool-role emphasis"><strong>飞书妙搭</strong><span>承接页面、流程、发布入口，是这个 MVP 的服务骨架。</span></div>
-              <div class="tool-role"><strong>AI 生成 + 质检</strong><span>负责把课堂笔记结构化，并在进入学生页前做质量守门。</span></div>
-              <div class="tool-role"><strong>飞书多维表</strong><span>承接真实字段、学生样本和复习状态，让内容可沉淀。</span></div>
+            <div class="arc-card">
+              <span class="arc-date">4 月中旬</span>
+              <h3>项目问题已经成型</h3>
+              <p>当时核心话已经是：让课上高价值内容被家长看见、被学生继续用上，不是单纯生成反馈。</p>
+              <div class="arc-tags"><span>服务可见</span><span>学生继续用</span><span>后续动作</span></div>
+            </div>
+            <div class="arc-card">
+              <span class="arc-date">4 月底</span>
+              <h3>展示页收束成服务链路</h3>
+              <p>学生端 V2、student_id 隔离、老师笔记入口、飞书字段和截图存证，开始变成产品判断。</p>
+              <div class="arc-tags"><span>student_id</span><span>多维表字段</span><span>截图存证</span></div>
+            </div>
+            <div class="arc-card">
+              <span class="arc-date">5 月底</span>
+              <h3>最终变成 HTML 路演形态</h3>
+              <p>90 秒视频讲完整流程，真实妙搭页面补证，多维表和反馈截图证明不是 PPT 动画。</p>
+              <div class="arc-tags"><span>HTML Deck</span><span>真实页面</span><span>反馈证据</span></div>
             </div>
           </div>
-          <div class="build-proof-row">
-            <div class="mini-stat"><strong>70+</strong><span>Project B 版本迭代，不是一次生成。</span></div>
-            <div class="mini-stat"><strong>12</strong><span>课堂样本继续补充，先保持小范围口径。</span></div>
-            <div class="mini-stat"><strong>1min</strong><span>这一页只讲做法，不抢主流程时间。</span></div>
+          <div class="credibility-bottom">
+            <div class="credibility-note">
+              <strong>妙搭价值</strong>
+              <span>让没有编程背景的老师，也能搭建自己的服务页面，并把页面和数据库结合起来。</span>
+            </div>
+            <div class="credibility-note accent">
+              <strong>当前口径</strong>
+              <span>M2 小范围测试；AI 不替老师判断；真实页面可验证；权限体系进入下一阶段。轻量对齐新航道 4R：可复习、可追踪、可复用。</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="footer"><span>空格 / 右方向键</span><span>60 秒以内</span></div>
+      <div class="footer"><span>空格 / 右方向键</span><span>讲可信度，不讲工作区治理逻辑</span></div>
     </section>
 
     <section class="slide soft" data-title="迭代过程">
@@ -1419,7 +1404,7 @@
       <button type="button" data-jump="2">流程</button>
       <button type="button" data-jump="3">视频</button>
       <button type="button" data-jump="4">页面</button>
-      <button type="button" data-jump="5">实现</button>
+      <button type="button" data-jump="5">可信</button>
       <button type="button" data-jump="6">迭代</button>
       <button type="button" data-jump="7">表格</button>
       <button type="button" data-jump="8">反馈</button>
